@@ -3,16 +3,15 @@ import { initialCards } from "./scripts/cards";
 import "./index.css";
 import {
   createCard,
-  addCard,
   likeCard,
   deleteCard,
   cardContainer,
 } from "./components/card";
 import { closePopup, openPopup } from "./components/modal";
 
-export const viewImage = document.querySelector(".popup_type_image");
-export const popupImage = viewImage.querySelector(".popup__image");
-export const popupCaption = viewImage.querySelector(".popup__caption");
+const viewImage = document.querySelector(".popup_type_image");
+const popupImage = viewImage.querySelector(".popup__image");
+const popupCaption = viewImage.querySelector(".popup__caption");
 
 const editButton = document.querySelector(".profile__edit-button");
 const editWindow = document.querySelector(".popup_type_edit");
@@ -48,6 +47,18 @@ editButton.addEventListener("click", () => {
 addButton.addEventListener("click", () => {
   openPopup(newCard);
 });
+
+function handleImageClick(item) {
+  (popupImage.src = item.link),
+  (popupImage.alt = item.name),
+  (popupCaption.textContent = item.name);
+  openPopup(viewImage)
+}
+
+function addCard(item) {
+  const cardElem = createCard(item.link, item.name, deleteCard, likeCard, () => handleImageClick(item));
+  cardContainer.append(cardElem);
+}
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();

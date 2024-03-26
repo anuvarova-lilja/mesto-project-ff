@@ -1,4 +1,4 @@
-import { viewImage, popupImage, popupCaption } from "../index";
+import { openPopup } from "./modal";
 
 const cardTemplate = document.querySelector("#card-template").content;
 export const cardContainer = document.querySelector(".places__list");
@@ -10,13 +10,6 @@ export function createCard(link, name, deleteCard, likeCard, handleImageClick) {
   cardImage.src = link;
   cardElem.querySelector(".card__title").textContent = name;
   cardImage.alt = name;
-
-  function handleImageClick() {
-    (popupImage.src = link),
-    (popupImage.alt = name),
-    (popupCaption.textContent = name);
-    viewImage.classList.toggle("popup_is-opened");
-  }
 
   cardImage.addEventListener("click", () => {
     handleImageClick(link, name)
@@ -32,11 +25,6 @@ export function createCard(link, name, deleteCard, likeCard, handleImageClick) {
 
 export function likeCard(evt) {
   evt.target.classList.toggle("card__like-button_is-active");
-}
-
-export function addCard(item, deleteCard) {
-  const cardElem = createCard(item.link, item.name, deleteCard, likeCard);
-  cardContainer.append(cardElem);
 }
 
 export function deleteCard(evt) {
