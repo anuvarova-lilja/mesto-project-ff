@@ -34,8 +34,15 @@ const placeUrlInput = handleNewCardFormSubmit.querySelector(".popup__input_type_
 
 const popups = document.querySelectorAll(".popup");
 
+function renderCard(item, method = "prepend") {
+  const cardElement = createCard(item.link, item.name, deleteCard, likeCard, () =>
+    handleImageClick(item)
+  );
+  cardContainer[ method ](cardElement);
+}
+
 initialCards.forEach(function (item) {
-  addCard(item, deleteCard);
+  renderCard(item, 'append')
 });
 
 editButton.addEventListener("click", () => {
@@ -49,15 +56,10 @@ addButton.addEventListener("click", () => {
 });
 
 function handleImageClick(item) {
-  (popupImage.src = item.link),
-  (popupImage.alt = item.name),
-  (popupCaption.textContent = item.name);
+  popupImage.src = item.link;
+  popupImage.alt = item.name;
+  popupCaption.textContent = item.name;
   openPopup(viewImage)
-}
-
-function addCard(item) {
-  const cardElem = createCard(item.link, item.name, deleteCard, likeCard, () => handleImageClick(item));
-  cardContainer.append(cardElem);
 }
 
 function handleProfileFormSubmit(evt) {
@@ -80,9 +82,12 @@ handleNewCardFormSubmit.addEventListener("submit", function (event) {
   const placeName = placeNameInput.value;
   const placeLink = placeUrlInput.value;
 
-  const newCardForm = createCard(placeLink, placeName, deleteCard, likeCard);
+  const item = {
+    name: placeName,
+    link: placeLink
+  }
 
-  cardContainer.prepend(newCardForm);
+  renderCard(item)
 
   handleNewCardFormSubmit.reset();
   

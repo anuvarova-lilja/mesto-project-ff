@@ -1,5 +1,3 @@
-import { openPopup } from "./modal";
-
 const cardTemplate = document.querySelector("#card-template").content;
 export const cardContainer = document.querySelector(".places__list");
 
@@ -11,9 +9,7 @@ export function createCard(link, name, deleteCard, likeCard, handleImageClick) {
   cardElem.querySelector(".card__title").textContent = name;
   cardImage.alt = name;
 
-  cardImage.addEventListener("click", () => {
-    handleImageClick(link, name)
-  });
+  cardImage.addEventListener("click", handleImageClick);
 
   cardElem.querySelector(".card__like-button").addEventListener("click", likeCard);
 
